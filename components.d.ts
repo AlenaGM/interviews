@@ -8,21 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppHeader: typeof import('./src/components/AppHeader.vue')['default']
-    Button: typeof import('primevue/button')['default']
-    Card: typeof import('primevue/card')['default']
-    Column: typeof import('primevue/column')['default']
-    ConfirmDialog: typeof import('primevue/confirmdialog')['default']
-    DataTable: typeof import('primevue/datatable')['default']
-    DatePicker: typeof import('primevue/datepicker')['default']
-    InputNumber: typeof import('primevue/inputnumber')['default']
-    InputText: typeof import('primevue/inputtext')['default']
-    Menubar: typeof import('primevue/menubar')['default']
-    Message: typeof import('primevue/message')['default']
-    ProgressSpinner: typeof import('primevue/progressspinner')['default']
-    RadioButton: typeof import('primevue/radiobutton')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Textarea: typeof import('primevue/textarea')['default']
-    Toast: typeof import('primevue/toast')['default']
   }
 }

@@ -10,7 +10,7 @@ export interface IInterview {
   salaryFrom?: number
   salaryTo?: number
   stages?: IStage[]
-  result: 'Offer' | 'Reject'
+  result?: 'Reject' | 'Offer'
 }
 
 export interface IStage {
