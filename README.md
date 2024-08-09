@@ -50,9 +50,3 @@ Statistics Dashboard:
 <br><br>
 
 [Interviews]: https://interviewlist.netlify.app/
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
