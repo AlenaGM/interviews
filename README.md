@@ -1,39 +1,52 @@
-# interviews
+# Interviews 📝
 
-This template should help get you started developing with Vue 3 in Vite.
+_Portfolio project: a CRUD application built to manage interview data built using Vue 3, TypeScript, Pinia, and Firebase_ <br><br>
 
-## Recommended IDE Setup
+This project was designed to showcase my skills in:
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+ &nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Building robust and interactive applications with Vue 3. <br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Utilizing TypeScript for enhanced code maintainability and type safety. <br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Leveraging Pinia for state management in a Vue application. <br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Integrating Firebase for authentication and data storage. <br>
+ &nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Implementing a user-friendly interface with a focus on efficiency. <br><br>
 
-## Type Support for `.vue` Imports in TS
+## Technical Stack
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+* Frontend: Vue 3, TypeScript, Pinia, Vue-Router, Chart.js<br>
+* Backend: Firebase (Authentication, Realtime Database)<br><br>
 
-## Customize configuration
+## Features<br>
+Sign-in/Sign-up Page:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Securely manage user login and registration using Firebase-authentication;<br>
 
-## Project Setup
+Interview List:
 
-```sh
-npm install
-```
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; View a comprehensive list of interviews.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Filter interviews by outcome (e.g., "Passed", "Failed", "Pending").<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Add, edit, and delete interview entries with ease.<br>
 
-### Compile and Hot-Reload for Development
+Interview Card:
+detailed view of each interview, including:<br>
 
-```sh
-npm run dev
-```
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Notes and comments.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Contact details.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Dates and stages of the interview process.<br>
 
-### Type-Check, Compile and Minify for Production
+Statistics Dashboard:
 
-```sh
-npm run build
-```
+&nbsp;&nbsp;&nbsp;&nbsp;&check;&nbsp;&nbsp; Visually track interview statistics with an interactive chart.<br><br> 
 
-### Lint with [ESLint](https://eslint.org/)
+## Demo
 
-```sh
-npm run lint
-```
+[Interviews]<br><br>
+
+## Result
+<br><br>
+<img width="40%" alt="screen capture" src="../main/src/assets/img/capture-auth.jpeg">
+<img width="40%" alt="screen capture" src="../main/src/assets/img/capture-list.jpeg">
+<img width="40%" alt="screen capture" src="../main/src/assets/img/capture-new.jpeg">
+<img width="40%" alt="screen capture" src="../main/src/assets/img/capture-stats.jpg">
+<br><br>
+
+[Interviews]: https://interviewlist.netlify.app/
