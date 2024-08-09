@@ -40,7 +40,9 @@
       <app-column field="hrName" header="Имя HR"></app-column>
       <app-column field="vacancyLink" header="Вакансия">
         <template #body="slotProps">
-          <a :href="slotProps.data.vacancyLink" target="_blank">Ссылка на вакансию</a>
+          <a :href="slotProps.data.vacancyLink" target="_blank" rel="noopener"
+            >Ссылка на вакансию</a
+          >
         </template>
       </app-column>
       <app-column header="Контакты">
@@ -50,6 +52,7 @@
               v-if="slotProps.data.contactTelegram"
               :href="`https://t.me/${slotProps.data.contactTelegram}`"
               target="_blank"
+              rel="noopener"
               class="contacts__telegram"
             >
               <span class="contacts__icon pi pi-telegram"></span>
@@ -58,6 +61,7 @@
               v-if="slotProps.data.contactWhatsApp"
               :href="`https://wa.me/${slotProps.data.contactWhatsApp}`"
               target="_blank"
+              rel="noopener"
               class="contacts__whatsapp"
             >
               <span class="contacts__icon pi pi-whatsapp"></span>
@@ -66,6 +70,7 @@
               v-if="slotProps.data.contactPhone"
               :href="`https://tel:${slotProps.data.contactPhone}`"
               target="_blank"
+              rel="noopener"
               class="contacts__phone"
             >
               <span class="contacts__icon pi pi-phone"></span>
