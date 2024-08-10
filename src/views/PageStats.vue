@@ -59,14 +59,14 @@ const setChartData = () => {
       {
         data,
         backgroundColor: [
-          documentStyle.getPropertyValue('--cyan-500'),
-          documentStyle.getPropertyValue('--orange-500'),
-          documentStyle.getPropertyValue('--gray-500')
+          documentStyle.getPropertyValue('--p-emerald-400'),
+          documentStyle.getPropertyValue('--p-rose-400'),
+          documentStyle.getPropertyValue('--p-gray-400')
         ],
         hoverBackgroundColor: [
-          documentStyle.getPropertyValue('--cyan-400'),
-          documentStyle.getPropertyValue('--orange-400'),
-          documentStyle.getPropertyValue('--gray-400')
+          documentStyle.getPropertyValue('--p-emerald-300'),
+          documentStyle.getPropertyValue('--p-rose-300'),
+          documentStyle.getPropertyValue('--p-gray-300')
         ]
       }
     ]
@@ -75,13 +75,14 @@ const setChartData = () => {
 
 const setChartOptions = () => {
   const documentStyle = getComputedStyle(document.documentElement)
-  const textColor = documentStyle.getPropertyValue('--text-color')
+  const textColor = documentStyle.getPropertyValue('--p-text-color')
 
   return {
     plugins: {
       legend: {
         labels: {
           cutout: '60%',
+          usePointStyle: true,
           color: textColor
         }
       }
