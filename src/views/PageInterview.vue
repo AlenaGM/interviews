@@ -72,7 +72,6 @@
                 class="input mb-3"
                 :id="`stage-date-${index}`"
                 dateFormat="dd.mm.yy"
-                @date-select="saveDateStage(index)"
                 v-model="stage.date"
               />
             </div>
@@ -118,10 +117,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { getFirestore, doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore'
 import { useUserStore } from '@/stores/user'
 import type { IInterview, IStage } from '@/interfaces'
-import dayjs from 'dayjs'
 
 const db = getFirestore()
 const userStore = useUserStore()
@@ -134,7 +132,23 @@ const docRef = doc(db, `users/${userStore.userId}/interviews`, route.params.id a
 const getData = async (): Promise<void> => {
   isLoading.value = true
   const docSnap = await getDoc(docRef)
-  interview.value = docSnap.data() as IInterview
+
+  if (docSnap.exists()) {
+    const data = docSnap.data() as IInterview
+
+    if (data.stages && data.stages.length) {
+      data.stages = data.stages.map((stage: IStage) => {
+        if (stage.date && stage.date instanceof Timestamp) {
+          return {
+            ...stage,
+            date: stage.date.toDate()
+          }
+        }
+        return stage
+      })
+    }
+    interview.value = data
+  }
   isLoading.value = false
 }
 
@@ -151,7 +165,7 @@ const addStage = () => {
     }
     interview.value.stages.push({
       name: '',
-      date: '',
+      date: null,
       description: ''
     })
   }
@@ -160,13 +174,6 @@ const addStage = () => {
 const removeStage = (index: number) => {
   if (interview.value) {
     interview.value.stages?.splice(index, 1)
-  }
-}
-
-const saveDateStage = (index: number) => {
-  if (interview.value?.stages && interview.value.stages.length) {
-    const date = interview.value.stages[index].date
-    interview.value.stages[index].date = dayjs(date).format('DD.MM.YYYY')
   }
 }
 

@@ -6,19 +6,19 @@
   </app-message>
   <div v-else>
     <h1>Список собеседований</h1>
-    <!--
+
     <div class="flex align-items-center mb-5">
       <div class="flex align-items-center mr-2">
-        <app-radio
+        <app-radio-button
           inputId="interviewResult1"
           name="result"
-          value="Refusal"
+          value="Reject"
           v-model="selectedFilterResult"
         />
         <label for="interviewResult1" class="ml-2">Отказ</label>
       </div>
       <div class="flex align-items-center mr-2">
-        <app-radio
+        <app-radio-button
           inputId="interviewResult2"
           name="result"
           value="Offer"
@@ -26,14 +26,17 @@
         />
         <label for="interviewResult2" class="ml-2">Оффер</label>
       </div>
-      <app-button class="mr-2" @click="submitFilter" :disabled="!selectedFilterResult"
+      <app-button
+        class="mr-2"
+        severity="info"
+        @click="submitFilter"
+        :disabled="!selectedFilterResult"
         >Применить</app-button
       >
       <app-button severity="danger" :disabled="!selectedFilterResult" @click="clearFilter"
         >Сбросить</app-button
       >
     </div>
-    -->
 
     <app-datatable :value="interviews">
       <app-column field="company" header="Компания"></app-column>
@@ -78,7 +81,6 @@
           </div>
         </template>
       </app-column>
-      <!--
       <app-column header="Пройденные этапы">
         <template #body="slotProps">
           <span v-if="!slotProps.data.stages">Не заполнено</span>
@@ -95,7 +97,7 @@
       </app-column>
       <app-column header="Зарплатная вилка">
         <template #body="slotProps">
-          <span v-if="!slotProps.data.salaryFrom">Не заполнено</span>
+          <span v-if="!slotProps.data.salaryFrom && !slotProps.data.salaryTo">Не заполнено</span>
           <span v-else>{{ slotProps.data.salaryFrom }} - {{ slotProps.data.salaryTo }}</span>
         </template>
       </app-column>
@@ -109,7 +111,7 @@
             />
           </template>
         </template>
-      </app-column>-->
+      </app-column>
       <app-column>
         <template #body="slotProps">
           <div class="flex gap-2">
@@ -137,7 +139,8 @@ import {
   orderBy,
   getDocs,
   deleteDoc,
-  doc
+  doc,
+  where
 } from 'firebase/firestore'
 import { useUserStore } from '@/stores/user'
 import type { IInterview } from '@/interfaces'
@@ -149,12 +152,38 @@ const confirm = useConfirm()
 
 const interviews = ref<IInterview[]>([])
 const isLoading = ref<boolean>(true)
+const selectedFilterResult = ref<string>('')
 
-const getAllInterviews = async <T extends IInterview>(): Promise<T[]> => {
-  const getData = query(
-    collection(db, `users/${userStore.userId}/interviews`),
-    orderBy('createdAt', 'desc')
-  )
+const submitFilter = async (): Promise<void> => {
+  isLoading.value = true
+  const listInterviews: Array<IInterview> = await getAllInterviews(true)
+  interviews.value = listInterviews
+  isLoading.value = false
+}
+
+const clearFilter = async (): Promise<void> => {
+  isLoading.value = true
+  const listInterviews: Array<IInterview> = await getAllInterviews()
+  interviews.value = listInterviews
+  isLoading.value = false
+}
+
+const getAllInterviews = async <T extends IInterview>(isFilter?: boolean): Promise<T[]> => {
+  let getData
+
+  if (isFilter) {
+    getData = query(
+      collection(db, `users/${userStore.userId}/interviews`),
+      orderBy('createdAt', 'desc'),
+      where('result', '==', selectedFilterResult.value)
+    )
+  } else {
+    getData = query(
+      collection(db, `users/${userStore.userId}/interviews`),
+      orderBy('createdAt', 'desc')
+    )
+  }
+
   const listDocs = await getDocs(getData)
 
   return listDocs.docs.map((doc) => doc.data() as T)
@@ -183,7 +212,7 @@ const confirmRemoveInterview = async (id: string): Promise<void> => {
 
 onMounted(async () => {
   const listInterviews: Array<IInterview> = await getAllInterviews()
-  interviews.value = [...listInterviews]
+  interviews.value = listInterviews
   isLoading.value = false
 })
 </script>
