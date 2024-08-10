@@ -49,4 +49,4 @@ Statistics Dashboard:
 <img width="40%" alt="screen capture" src="../main/src/assets/img/capture-stats.jpg">
 <br><br>
 
-[Interviews]: https://interviewlist.netlify.app/
+[Interviews]: https://interviews-list.netlify.app
