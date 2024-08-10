@@ -15,7 +15,7 @@
         class="flex align-items-center menu-exit"
       >
         <span class="pi pi-sign-out p-menuitem-icon" />
-        <span class="ml-2">Выход</span>
+        <span class="ml-2">{{ t('message.signOut') }}</span>
       </span>
     </template>
   </app-menubar>
@@ -27,6 +27,8 @@ import type { ComputedRef } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { getAuth, signOut } from 'firebase/auth'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -40,25 +42,25 @@ interface IMenuItem {
 
 const items = ref<IMenuItem[]>([
   {
-    label: 'Авторизация',
+    label: t('message.auth'),
     icon: 'pi pi-user',
     path: '/auth',
     show: computed((): boolean => !userStore.userId)
   },
   {
-    label: 'Добавить',
+    label: t('message.auth'),
     icon: 'pi pi-plus',
     path: '/',
     show: computed((): boolean => !!userStore.userId)
   },
   {
-    label: 'Список собеседований',
+    label: t('message.list'),
     icon: 'pi pi-list',
     path: '/list',
     show: computed((): boolean => !!userStore.userId)
   },
   {
-    label: 'Статистика',
+    label: t('message.stats'),
     icon: 'pi pi-chart-pie',
     path: '/stats',
     show: computed((): boolean => !!userStore.userId)

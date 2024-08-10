@@ -1,5 +1,5 @@
 <template>
-  <h1>Статистика</h1>
+  <h1>{{ t('message.stats') }}</h1>
   <div class="card flex justify-content-center">
     <app-chart
       type="doughnut"
@@ -15,6 +15,8 @@ import { ref, onMounted } from 'vue'
 import { getFirestore, collection, query, orderBy, getDocs } from 'firebase/firestore'
 import { useUserStore } from '@/stores/user'
 import type { IInterview } from '@/interfaces'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const userStore = useUserStore()
 const db = getFirestore()
@@ -54,7 +56,7 @@ const setChartData = () => {
   })
 
   return {
-    labels: ['Оффер', 'Отказ', 'В процессе'],
+    labels: [t('message.offer'), t('message.reject'), t('message.inProgress')],
     datasets: [
       {
         data,

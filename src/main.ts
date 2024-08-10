@@ -6,6 +6,7 @@ import { initializeApp } from 'firebase/app'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { createI18n } from 'vue-i18n'
 import PrimeVue from 'primevue/config'
 import Lara from '@primevue/themes/lara'
 import ToastService from 'primevue/toastservice'
@@ -45,6 +46,27 @@ const firebaseConfig = {
 
 initializeApp(firebaseConfig)
 
+import en from './locales/en.json'
+import ru from './locales/ru.json'
+import fr from './locales/fr.json'
+
+const userLocale =
+  {
+    ru: 'ru',
+    fr: 'fr'
+  }[window.navigator.language.split('-')[0]] || 'en'
+
+const i18n = createI18n({
+  legacy: false,
+  locale: userLocale,
+  fallbackLocale: 'en',
+  messages: {
+    ru: { message: ru },
+    fr: { message: fr },
+    en: { message: en }
+  }
+})
+
 const app = createApp(App)
 
 app.use(ToastService)
@@ -56,6 +78,7 @@ app.use(PrimeVue, {
     preset: Lara
   }
 })
+app.use(i18n)
 app.directive('tooltip', Tooltip)
 app.component('app-menubar', Menubar)
 app.component('app-button', Button)

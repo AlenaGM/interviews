@@ -2,22 +2,22 @@
   <app-progress v-if="isLoading" />
   <div class="content-interview" v-else-if="interview?.id && !isLoading">
     <app-card>
-      <template #title>Собеседование в компанию {{ interview.company }}</template>
+      <template #title>{{ t('message.withCompany') }} {{ interview.company }}</template>
       <template #content>
         <div class="flex flex-column gap-2">
-          <label for="company">Компания</label>
+          <label for="company">{{ t('message.company') }}</label>
           <app-input-text class="input mb-3" id="company" v-model="interview.company" />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="vacancyLink">Описание вакансии (ссылка)</label>
+          <label for="vacancyLink">{{ t('message.description') }}</label>
           <app-input-text class="input mb-3" id="vacancyLink" v-model="interview.vacancyLink" />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="hrName">Контакт (имя)</label>
+          <label for="hrName">{{ t('message.contact') }}</label>
           <app-input-text class="input mb-3" id="hrName" v-model="interview.hrName" />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="contactTelegram">Telegram username HR</label>
+          <label for="contactTelegram">{{ t('message.telegram') }}</label>
           <app-input-text
             class="input mb-3"
             id="contactTelegram"
@@ -25,7 +25,7 @@
           />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="contactWhatsApp">WhatsApp HR</label>
+          <label for="contactWhatsApp">{{ t('message.whatsapp') }}</label>
           <app-input-text
             class="input mb-3"
             id="contactWhatsApp"
@@ -33,28 +33,28 @@
           />
         </div>
         <div class="flex flex-column gap-2">
-          <label for="contactPhone">Телефон HR</label>
+          <label for="contactPhone">{{ t('message.phone') }}</label>
           <app-input-text class="input mb-3" id="contactPhone" v-model="interview.contactPhone" />
         </div>
         <div class="flex flex-wrap gap-3 p-fluid mb-3">
           <div class="flex-auto">
             <app-input-number
               inputId="salaryFrom"
-              placeholder="Зарплатная вилка от"
+              :placeholder="t('message.salaryFrom')"
               v-model="interview.salaryFrom"
             />
           </div>
           <div class="flex-auto">
             <app-input-number
               inputId="salaryTo"
-              placeholder="Зарплатная вилка до"
+              :placeholder="t('message.salaryTo')"
               v-model="interview.salaryTo"
             />
           </div>
         </div>
 
         <app-button
-          label="Добавить этап"
+          :label="t('message.addStage')"
           severity="info"
           icon="pi pi-plus"
           class="mb-3"
@@ -63,11 +63,11 @@
         <template v-if="interview.stages">
           <div v-for="(stage, index) in interview.stages" :key="index" class="interview-stage">
             <div class="flex flex-column gap-2">
-              <label :for="`stage-name-${index}`">Название этапа</label>
+              <label :for="`stage-name-${index}`">{{ t('message.stageName') }}</label>
               <app-input-text class="input mb-3" :id="`stage-name-${index}`" v-model="stage.name" />
             </div>
             <div class="flex flex-column gap-2">
-              <label :for="`stage-date-${index}`">Дата прохождения этапа</label>
+              <label :for="`stage-date-${index}`">{{ t('message.stageDate') }}</label>
               <app-datepicker
                 class="input mb-3"
                 :id="`stage-date-${index}`"
@@ -76,7 +76,7 @@
               />
             </div>
             <div class="flex flex-column gap-2">
-              <label :for="`stage-description-${index}`">Комментарий</label>
+              <label :for="`stage-description-${index}`">{{ t('message.comment') }}</label>
               <app-textarea
                 :id="`stage-description-${index}`"
                 class="input mb-3"
@@ -84,7 +84,7 @@
                 v-model="stage.description"
               />
             </div>
-            <app-button severity="danger" label="Удалить этап" @click="removeStage" />
+            <app-button severity="danger" :label="t('message.removeStage')" @click="removeStage" />
           </div>
         </template>
 
@@ -96,7 +96,7 @@
               value="Reject"
               v-model="interview.result"
             />
-            <label for="interviewResult1" class="ml-2">Отказ</label>
+            <label for="interviewResult1" class="ml-2">{{ t('message.reject') }}</label>
           </div>
           <div class="flex align-items-center">
             <app-radio-button
@@ -105,10 +105,10 @@
               value="Offer"
               v-model="interview.result"
             />
-            <label for="interviewResult2" class="ml-2">Оффер</label>
+            <label for="interviewResult2" class="ml-2">{{ t('message.offer') }}</label>
           </div>
         </div>
-        <app-button label="Сохранить" icon="pi pi-save" @click="saveInterview" />
+        <app-button :label="t('message.save')" icon="pi pi-save" @click="saveInterview" />
       </template>
     </app-card>
   </div>
@@ -120,6 +120,8 @@ import { useRoute } from 'vue-router'
 import { getFirestore, doc, getDoc, updateDoc, Timestamp } from 'firebase/firestore'
 import { useUserStore } from '@/stores/user'
 import type { IInterview, IStage } from '@/interfaces'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const db = getFirestore()
 const userStore = useUserStore()

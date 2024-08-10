@@ -1,29 +1,33 @@
 <template>
   <div class="content-interview">
     <app-card>
-      <template #title>Новое собеседование</template>
+      <template #title>{{ t('message.new') }}</template>
       <template #content>
-        <app-input-text class="input mb-3" placeholder="Компания" v-model="company" />
+        <app-input-text class="input mb-3" :placeholder="t('message.company')" v-model="company" />
         <app-input-text
           v-model="vacancyLink"
           class="input mb-3"
-          placeholder="Описание вакансии (ссылка)"
+          :placeholder="t('message.description')"
         />
-        <app-input-text v-model="hrName" class="input mb-3" placeholder="Контакт (имя)" />
+        <app-input-text v-model="hrName" class="input mb-3" :placeholder="t('message.contact')" />
         <app-input-text
           v-model="contactTelegram"
           class="input mb-3"
-          placeholder="Telegram username HR"
+          :placeholder="t('message.telegram')"
         />
         <app-input-text
           v-model="contactWhatsApp"
           class="input mb-3"
-          placeholder="WhatsApp телефон HR"
+          :placeholder="t('message.whatsapp')"
         />
-        <app-input-text v-model="contactPhone" class="input mb-3" placeholder="Телефон HR" />
+        <app-input-text
+          v-model="contactPhone"
+          class="input mb-3"
+          :placeholder="t('message.phone')"
+        />
         <app-button
           @click="addNewInterview"
-          label="Создать собеседование"
+          :label="t('message.create')"
           :disabled="disabledSaveButton"
           :loading="loading"
         ></app-button>
@@ -39,6 +43,8 @@ import { getFirestore, setDoc, doc } from 'firebase/firestore'
 import type { IInterview } from '@/interfaces'
 import { v4 as uuidv4 } from 'uuid'
 import { useUserStore } from '@/stores/user'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const userStore = useUserStore()
 const db = getFirestore()

@@ -2,10 +2,10 @@
   <app-dialog />
   <app-progress v-if="isLoading" />
   <app-message v-else-if="!isLoading && !interviews.length" severity="info"
-    >Нет добавленных собеседований
+    >{{ t('message.noInterviews') }}
   </app-message>
   <div v-else>
-    <h1>Список собеседований</h1>
+    <h1>{{ t('message.list') }}</h1>
 
     <div class="flex align-items-center mb-5">
       <div class="flex align-items-center mr-2">
@@ -15,7 +15,7 @@
           value="Reject"
           v-model="selectedFilterResult"
         />
-        <label for="interviewResult1" class="ml-2">Отказ</label>
+        <label for="interviewResult1" class="ml-2">{{ t('message.reject') }}</label>
       </div>
       <div class="flex align-items-center mr-2">
         <app-radio-button
@@ -24,31 +24,31 @@
           value="Offer"
           v-model="selectedFilterResult"
         />
-        <label for="interviewResult2" class="ml-2">Оффер</label>
+        <label for="interviewResult2" class="ml-2">{{ t('message.offer') }}</label>
       </div>
       <app-button
         class="mr-2"
         severity="info"
         @click="submitFilter"
         :disabled="!selectedFilterResult"
-        >Применить</app-button
+        >{{ t('message.apply') }}</app-button
       >
-      <app-button severity="danger" :disabled="!selectedFilterResult" @click="clearFilter"
-        >Сбросить</app-button
-      >
+      <app-button severity="danger" :disabled="!selectedFilterResult" @click="clearFilter">{{
+        t('message.reset')
+      }}</app-button>
     </div>
 
     <app-datatable :value="interviews">
-      <app-column field="company" header="Компания"></app-column>
-      <app-column field="hrName" header="Имя HR"></app-column>
-      <app-column field="vacancyLink" header="Вакансия">
+      <app-column field="company" :header="t('message.company')"></app-column>
+      <app-column field="hrName" :header="t('message.hrName')"></app-column>
+      <app-column field="vacancyLink" :header="t('message.vacancy')">
         <template #body="slotProps">
-          <a :href="slotProps.data.vacancyLink" target="_blank" rel="noopener"
-            >Ссылка на вакансию</a
-          >
+          <a :href="slotProps.data.vacancyLink" target="_blank" rel="noopener">{{
+            t('message.link')
+          }}</a>
         </template>
       </app-column>
-      <app-column header="Контакты">
+      <app-column :header="t('message.contacts')">
         <template #body="slotProps">
           <div class="contacts">
             <a
@@ -81,9 +81,9 @@
           </div>
         </template>
       </app-column>
-      <app-column header="Пройденные этапы">
+      <app-column :header="t('message.passedStages')">
         <template #body="slotProps">
-          <span v-if="!slotProps.data.stages">Не заполнено</span>
+          <span v-if="!slotProps.data.stages">{{ t('message.notFilled') }}</span>
           <div v-else class="interview-stages">
             <app-badge
               v-for="(stage, i) in slotProps.data.stages"
@@ -95,19 +95,21 @@
           </div>
         </template>
       </app-column>
-      <app-column header="Зарплатная вилка">
+      <app-column :header="t('message.salary')">
         <template #body="slotProps">
-          <span v-if="!slotProps.data.salaryFrom && !slotProps.data.salaryTo">Не заполнено</span>
+          <span v-if="!slotProps.data.salaryFrom && !slotProps.data.salaryTo">{{
+            t('message.notFilled')
+          }}</span>
           <span v-else>{{ slotProps.data.salaryFrom }} - {{ slotProps.data.salaryTo }}</span>
         </template>
       </app-column>
-      <app-column header="Результат">
+      <app-column :header="t('message.result')">
         <template #body="slotProps">
-          <span v-if="!slotProps.data.result">Не заполнено</span>
+          <span v-if="!slotProps.data.result">{{ t('message.notFilled') }}</span>
           <template v-else>
             <app-badge
               :severity="slotProps.data.result === 'Offer' ? 'success' : 'danger'"
-              :value="slotProps.data.result === 'Offer' ? 'Оффер' : 'Отказ'"
+              :value="slotProps.data.result === 'Offer' ? t('message.offer') : t('message.reject')"
             />
           </template>
         </template>
@@ -145,6 +147,8 @@ import {
 import { useUserStore } from '@/stores/user'
 import type { IInterview } from '@/interfaces'
 import { useConfirm } from 'primevue/useconfirm'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 
 const userStore = useUserStore()
 const db = getFirestore()
@@ -191,11 +195,11 @@ const getAllInterviews = async <T extends IInterview>(isFilter?: boolean): Promi
 
 const confirmRemoveInterview = async (id: string): Promise<void> => {
   confirm.require({
-    message: 'Вы уверены, что хотите удалить собеседование?',
-    header: 'Удаление собеседования',
+    message: t('message.sureToRemove?'),
+    header: t('message.removeInterview'),
     icon: 'pi pi-exclamation-triangle',
-    rejectLabel: 'Отмена',
-    acceptLabel: 'Удалить',
+    rejectLabel: t('message.cancel'),
+    acceptLabel: t('message.remove'),
     rejectClass: 'p-button-secondary p-button-outlined',
     acceptClass: 'p-button-danger',
     accept: async () => {
