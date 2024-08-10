@@ -12,7 +12,7 @@ This project was designed to showcase my skills in:
 
 ## Technical Stack
 
-* Frontend: Vue 3, TypeScript, Pinia, Vue-Router, Chart.js<br>
+* Frontend: Vue 3, TypeScript, Pinia, Vue-Router, Chart.js, Vue-i18n<br>
 * Backend: Firebase (Authentication, Realtime Database)<br><br>
 
 ## Features<br>
