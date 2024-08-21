@@ -48,7 +48,7 @@ const items = ref<IMenuItem[]>([
     show: computed((): boolean => !userStore.userId)
   },
   {
-    label: t('message.auth'),
+    label: t('message.add'),
     icon: 'pi pi-plus',
     path: '/',
     show: computed((): boolean => !!userStore.userId)
